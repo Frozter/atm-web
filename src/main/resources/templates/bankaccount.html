@@ -4,12 +4,8 @@
       xmlns:th="https://www.thymeleaf.org">
 
 <div class="container" layout:fragment="content">
-    <h1>BankAccount Register</h1>
+    <h1>Open BankAccount</h1>
     <form th:action = "@{/bankaccount}" method="POST">
-        <div class="form-group">
-            <label for="inputID">ID</label><br>
-            <input type = input name = "id" id = "inputID" class="form-control" >
-            <br>
 
 
             <div class="form-group">
@@ -39,12 +35,11 @@
                     </div>
                 </div>
             </div>
-        </div>
     </form>
     <hr>
 
 
-    <h3>Account</h3>
+    <h3>All BankAccount</h3>
     <br>
     <table border="3px" class="table table-bordered ">
         <thead class="thead-light">
