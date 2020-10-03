@@ -1,17 +1,18 @@
 package th.ac.ku.atm.service;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import th.ac.ku.atm.model.BankAccount;
-
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class BankAccountService {
+    private ArrayList<BankAccount> bankAccountList = new ArrayList<>();
+
     private RestTemplate restTemplate;
 
     public BankAccountService(RestTemplate restTemplate) {
@@ -28,13 +29,32 @@ public class BankAccountService {
         return Arrays.asList(accounts);
     }
 
-    private List<BankAccount> bankAccounts;
-    @PostConstruct
-    public void BankAccountService(){
-        bankAccounts = new ArrayList<>();
+    public void openAccount(BankAccount bankAccount) {
+        String url = "http://localhost:8091/api/bankaccount";
+
+        restTemplate.postForObject(url, bankAccount, BankAccount.class);
     }
-    public void CreateAccount(BankAccount bankAccount){
-        bankAccounts.add(bankAccount);
+
+    public BankAccount getBankAccount(int id) {
+        String url = "http://localhost:8091/api/bankaccount/" + id;
+
+        ResponseEntity<BankAccount> response =
+                restTemplate.getForEntity(url, BankAccount.class);
+
+        return response.getBody();
+    }
+
+    public void editBankAccount(BankAccount bankAccount) {
+        String url = "http://localhost:8091/api/bankaccount/" +
+                bankAccount.getId();
+        restTemplate.put(url, bankAccount);
+    }
+
+
+
+
+    public void createBankAccount(BankAccount bankAccount) {
+        bankAccountList.add(bankAccount);
     }
 
     public List<BankAccount> getBankAccounts() {
@@ -48,11 +68,6 @@ public class BankAccountService {
     }
 
 
-    public void openAccount(BankAccount bankAccount) {
-        String url = "http://localhost:8091/api/bankaccount";
-
-        restTemplate.postForObject(url, bankAccount, BankAccount.class);
-    }
 
 
 }

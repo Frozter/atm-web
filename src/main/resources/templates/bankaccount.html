@@ -4,59 +4,56 @@
       xmlns:th="https://www.thymeleaf.org">
 
 <div class="container" layout:fragment="content">
-    <h1>Open BankAccount</h1>
-    <form th:action = "@{/bankaccount}" method="POST">
 
+        <h1>Open Bank Account</h1>
+        <form th:action="@{/bankaccount}" method="POST">
 
             <div class="form-group">
-                <label for="inputCustomerID">Custommer ID</label>
-                <br>
-                <input type = input name = "customerId" id = "inputCustomerId" class="form-control" >
-                <br>
-
-
-                <div class="form-group">
-                    <label for="inputType">  Type</label>
-                    <br>
-                    <input type = input name = "type" id = "inputType"  class="form-control" >
-                    <br>
-
-
-                    <div class="form-group">
-                        <label for="inputBalance" >  Balance</label>
-                        <br>
-
-                        <input type = input name = "balance" id = "inputBalance" class="form-control">
-                        <br>
-                        <br>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-success">
-                        </div>
-                    </div>
-                </div>
+                <label for="inputCustomer">Customer Id</label>
+                <input type="text" class="form-control" name="customerId" id="inputCustomer">
             </div>
-    </form>
-    <hr>
+
+            <div class="form-group">
+                <label for="inputType">Type</label>
+                <input type="text" class="form-control" name="type" id="inputType">
+            </div>
+
+            <div class="form-group">
+                <label for="inputBalance">Balance</label>
+                <input type="text" class="form-control" name="balance" id="inputBalance">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary">
+            </div>
+
+        </form>
+        <hr>
 
 
-    <h3>All BankAccount</h3>
+
+        <h3>All BankAccount</h3>
     <br>
-    <table border="3px" class="table table-bordered ">
+    <table class="table table-bordered ">
         <thead class="thead-light">
         <tr>
             <th scope="col">id</th>
             <th scope="col">customerID</th>
             <th scope="col">type</th>
             <th scope="col">balance</th>
+            <th>Actions</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each = "Account : ${AllAccount}">
-            <td th:text = "${Account.id}" scope="row"></td>
-            <td th:text = "${Account.customerId}"></td>
-            <td th:text = "${Account.type}"></td>
-            <td th:text = "${Account.balance}"></td>
+        <tr th:each = "account : ${AllAccount}">
+            <td th:text = "${account.id}" scope="row"></td>
+            <td th:text = "${account.customerId}"></td>
+            <td th:text = "${account.type}"></td>
+            <td th:text = "${account.balance}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/bankaccount/edit/{id}(id=${account.id})}">Edit</a>
+            </td>
         </tr>
         </tbody>
     </table>
