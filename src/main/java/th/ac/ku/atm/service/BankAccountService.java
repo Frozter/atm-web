@@ -70,7 +70,27 @@ public class BankAccountService {
         BankAccount[] accounts = response.getBody();
         return Arrays.asList(accounts);
     }
+    public void depositBankAccount(BankAccount bankAccount, double number) {
+        String url = "http://localhost:8091/api/bankaccount/" +
+                bankAccount.getId();
+        double total = bankAccount.getBalance() + number;
+        bankAccount.setBalance(total);
+        restTemplate.put(url, bankAccount);
+    }
 
+    public void withDrawBankAccount(BankAccount bankAccount, double number) {
+        String url = "http://localhost:8091/api/bankaccount/" +
+                bankAccount.getId();
+        double total = 0;
+        if (bankAccount.getBalance() > number) {
+            total = bankAccount.getBalance() - number;
+        }
+        else {
+            total = number - bankAccount.getBalance();
+        }
+        bankAccount.setBalance(total);
+        restTemplate.put(url, bankAccount);
+    }
 
 
 
